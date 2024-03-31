@@ -1,0 +1,59 @@
+﻿@page 
+@model IndexModel
+@{
+    ViewData["Title"] = "OpenFlights Search Tool";
+}
+
+<div class="text-start">
+    <h1 class="display-4">Welcome to the OpenFlights Search Tool!</h1>
+    <div class="flight-search-block py-3">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach (var modelError in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@modelError.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+        <h2 class="py-1">Search for direct flights by airport name:</h2>
+        <form method="post" asp-page-handler="FilterByName">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="airport-selector">
+                        <label for="departureAirportSelector">Departure Airport: </label>
+                        <select id="departureAirportSelector" name="SourceAirportName" class="form-control" asp-items="Model.AirportNames" asp-for="InputModel"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="airport-selector">
+                        <label for="arrivalAirportSelector">Arrival Airport: </label>
+                        <select id="arrivalAirportSelector" name="DestAirportName" class="form-control" asp-items="Model.AirportNames" asp-for="InputModel"></select>
+                    </div>
+                </div>
+            </div>
+            <button class="my-2" type="submit">Submit</button>
+        </form>
+    </div>
+        <h2 class="py-1">Search for direct flights by IATA code:</h2>
+        <form method="post" asp-page-handler="FilterByCode">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="airport-selector">
+                        <label for="departureAirportSelector">Departure Airport: </label>
+                        <select id="departureAirportSelector" name="SourceAirportCode" class="form-control" asp-items="Model.AirportCodes" asp-for="InputModel"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="airport-selector">
+                        <label for="arrivalAirportSelector">Arrival Airport: </label>
+                        <select id="arrivalAirportSelector" name="DestAirportCode" class="form-control" asp-items="Model.AirportCodes" asp-for="InputModel"></select>
+                    </div>
+                </div>
+            </div>
+            <button class="my-2" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
